@@ -13,11 +13,12 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import getpass
 
 #Prompt for user credentials
+apicIP = raw_input('APIC FQDN or IP: ')
 TacacsUser = raw_input('TACACS+ Username: ')
 TacacsPassword = getpass.getpass()
 
 # APIC Login Credentials
-apicUrl = 'https://ssacimn010a02apic01.ss.astontech.com'
+apicUrl = 'https://' + apicIP
 apicUsername = 'apic:TACACS\\' + TacacsUser
 apicPassword = TacacsPassword
 loginSession = LoginSession(apicUrl, apicUsername, apicPassword)
@@ -31,7 +32,7 @@ uniMo = moDir.lookupByDn('uni')
 
 # Create a new Tenant MO and connect it as a Child object to the root of the MIM
 # Call the new Tenant MO 'ExampleSdkTenant'
-fvTenantMo = fvModels.Tenant(uniMo, 'ExampleSdkTenant')
+fvTenantMo = fvModels.Tenant(uniMo, 'ExampleSdkTenant-3')
 
 # Create new Private network/VRF under the new Tenant
 fvContextMo = fvModels.Ctx(fvTenantMo, 'myVRF')
