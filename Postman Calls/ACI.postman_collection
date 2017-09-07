@@ -1,0 +1,456 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ACI",
+		"_postman_id": "8012392b-8333-88cb-4eb4-1e5982ac8a15",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ACI Login",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/aaaLogin.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"aaaUser\" : {\n\t\t\"attributes\" : {\n\t\t\t\"name\" : \"apic:TACACS\\\\dimitri.capetz\",\n\t\t\t\"pwd\" : \"0227DcDc\"\n\t\t}\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "ACI Login Refresh (Extend Timeout)",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/aaaRefresh.json",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tenant and VRF",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"polUni\" : {\n\t\t\"attributes\" : {}\n\t\t  \"children\" : [{\n\t\t  \t  \"fvTenant\" : {\n\t\t  \t  \t\"attributes\" : {\n\t\t  \t  \t\t\"name\" : \"ExampleApiTenant\"\n\t\t  \t  \t}\n\t\t  \t  \t\"children\" : [{\n\t\t  \t  \t\t\"fvCtx\" : {\n\t\t  \t  \t\t\t\"attributes\" : {\n\t\t  \t  \t\t\t\t\"name\" : \"ExampleApiTenant_VRF\"\n\t\t  \t  \t\t\t}\n\t\t  \t  \t\t}\n\t\t  \t  \t}]\n\t\t  \t  }\n\t\t  }]\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Tenants (Class)",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/class/fvTenant.json",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific Tenant (MO)",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant.json",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tenant VRF",
+			"request": {
+				"url": {
+					"raw": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/.json?query-target=subtree&target-subtree-class=fvCtx",
+					"protocol": "https",
+					"host": [
+						"ssacimn010a02apic01",
+						"ss",
+						"astontech",
+						"com"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-ExampleApiTenant",
+						".json"
+					],
+					"query": [
+						{
+							"key": "query-target",
+							"value": "subtree",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "target-subtree-class",
+							"value": "fvCtx",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bridge Domain",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"polUni\" : {\n        \"attributes\" : {}\n        \"children\" : [{\n            \"fvTenant\" : {\n                \"attributes\" : {\n                    \"name\" : \"ExampleApiTenant\"\n                }\n                \"children\" : [{\n                    \"fvBD\" : {\n                        \"attributes\" : {\n                            \"name\" : \"ExampleApiTenant_BD\"\n                        }\n                        \"children\" : [{\n                            \"fvSubnet\" : {\n                                \"attributes\" : {\n                                    \"ip\" : \"192.168.1.1/24\"\n                                }\n                            }\n                        },\n                        {\n                            \"fvRsCtx\" : {\n                                \"attributes\" : {\n                                    \"tnFvCtxName\" : \"ExampleApiTenant_VRF\"\n                                }\n                            }\n                        }]\n                    }\n                }]\n            }\n        }]\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Tenant Description",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"polUni\" : {\n        \"attributes\" : {}\n        \"children\" : [{\n            \"fvTenant\" : {\n                \"attributes\" : {\n                    \"name\" : \"ExampleApiTenant\",\n                    \"descr\" : \"Tenant API Description\"\n                }\n            }\n        }]\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Query Specific Tenant (MO) Children",
+			"request": {
+				"url": {
+					"raw": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/.json?query-target=children",
+					"protocol": "https",
+					"host": [
+						"ssacimn010a02apic01",
+						"ss",
+						"astontech",
+						"com"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-ExampleApiTenant",
+						".json"
+					],
+					"query": [
+						{
+							"key": "query-target",
+							"value": "children",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bridge Domain Subnet using MO URI",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/BD-ExampleApiTenant_BD.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fvSubnet\" : {\n        \"attributes\" : {\n            \"ip\" : \"192.168.10.1/24\"\n        }\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Query Specific BD (MO) Children",
+			"request": {
+				"url": {
+					"raw": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/BD-ExampleApiTenant_BD/.json?query-target=children",
+					"protocol": "https",
+					"host": [
+						"ssacimn010a02apic01",
+						"ss",
+						"astontech",
+						"com"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-ExampleApiTenant",
+						"BD-ExampleApiTenant_BD",
+						".json"
+					],
+					"query": [
+						{
+							"key": "query-target",
+							"value": "children",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tenant from Inspector",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-Test_ACI.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fvTenant\":{\n        \"attributes\":{\n            \"dn\":\"uni/tn-Test_ACI\",\n            \"name\":\"Test_ACI\",\n            \"rn\":\"tn-Test_ACI\"\n        },\n        \"children\":[]\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create VRF, BD and Subnet from Inspector",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-Test_ACI.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fvTenant\":{\n        \"attributes\":{\n            \"dn\":\"uni/tn-Test_ACI\"\n        },\n        \"children\":[{\n            \"fvBD\":{\n                \"attributes\":{\n                    \"dn\":\"uni/tn-Test_ACI/BD-DevNet-BD1\",\n                    \"name\":\"DevNet-BD1\",\n                    \"rn\":\"BD-DevNet-BD1\"\n                },\n                \"children\":[{\n                    \"fvRsCtx\":{\n                        \"attributes\":{\n                            \"tnFvCtxName\":\"DevNet-VRF1\"\n                        },\n                        \"children\":[]\n                    }\n                },\n                {\n                    \"fvSubnet\":{\n                        \"attributes\":{\n                            \"dn\":\"uni/tn-Test_ACI/BD-DevNet-BD1/subnet-[10.10.10.1/24]\",\n                            \"ctrl\":\"unspecified\",\n                            \"ip\":\"10.10.10.1/24\",\n                            \"rn\":\"subnet-[10.10.10.1/24]\"\n                        },\n                        \"children\":[]\n                    }\n                }]\n            }\n        },\n        {\n            \"fvCtx\":{\n                \"attributes\":{\n                    \"dn\":\"uni/tn-Test_ACI/ctx-DevNet-VRF1\",\n                    \"name\":\"DevNet-VRF1\",\n                    \"rn\":\"ctx-DevNet-VRF1\"\n                },\n                \"children\":[]\n            }\n        }]\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Application Profile and EPG",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/ap-DevNet-AP1.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n    \"fvAp\":{  \n        \"attributes\":{  \n            \"dn\":\"uni/tn-ExampleApiTenant/ap-DevNet-AP1\",\n            \"name\":\"DevNet-AP1\",\n            \"rn\":\"ap-DevNet-AP1\"\n        },\n        \"children\":[  \n            {  \n                \"fvAEPg\":{  \n                    \"attributes\":{  \n                        \"dn\":\"uni/tn-ExampleApiTenant/ap-DevNet-AP1/epg-DevNet-Web\",\n                        \"name\":\"DevNet-Web\",\n                        \"rn\":\"epg-DevNet-Web\"\n                    },\n                    \"children\":[  \n                        {  \n                            \"fvRsBd\":{  \n                                \"attributes\":{  \n                                    \"tnFvBDName\":\"ExampleApiTenant_BD\"\n                                },\n                                \"children\":[  \n\n                                ]\n                            }\n                        },\n                        {  \n                            \"fvRsDomAtt\":{  \n                                \"attributes\":{  \n                                    \"tDn\":\"uni/vmmp-VMware/dom-ssacimn010a02vds01\",\n                                    \"instrImedcy\":\"immediate\",\n                                    \"resImedcy\":\"immediate\"\n                                },\n                                \"children\":[  \n\n                                ]\n                            }\n                        }\n                    ]\n                }\n            }\n        ]\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add EPG to Existing AP",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/ap-DevNet-AP1/epg-DevNet-DB.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fvAEPg\":{\n        \"attributes\":{\n            \"dn\":\"uni/tn-ExampleApiTenant/ap-DevNet-AP1/epg-DevNet-DB\",\n            \"name\":\"DevNet-DB\",\n            \"rn\":\"epg-DevNet-DB\"\n        },\n        \"children\":[{\n            \"fvRsBd\":{\n                \"attributes\":{\n                    \"tnFvBDName\":\"DevNet-BD1\"\n                },\n                \"children\":[]\n            }\n        },\n        {\n            \"fvRsDomAtt\":{\n                \"attributes\":{\n                    \"tDn\":\"uni/vmmp-VMware/dom-ssacimn010a02vds01\",\n                    \"instrImedcy\":\"immediate\",\n                    \"resImedcy\":\"immediate\",\n                    \"status\":\"created\"\n                },\n                \"children\":[]\n            }\n        }]\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Contract and Subject (Existing Common Filter)",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/brc-AllTraffic.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vzBrCP\":{\n        \"attributes\":{\n            \"dn\":\"uni/tn-ExampleApiTenant/brc-AllTraffic\",\n            \"name\":\"AllTraffic\",\n            \"rn\":\"brc-AllTraffic\"\n        },\n        \"children\":[\n            {\n                \"vzSubj\":{\n                    \"attributes\":{\n                        \"dn\":\"uni/tn-ExampleApiTenant/brc-AllTraffic/subj-AllTraffic\",\n                        \"name\":\"AllTraffic\",\n                        \"rn\":\"subj-AllTraffic\"\n                    },\n                    \"children\":[\n                        {\n                            \"vzRsSubjFiltAtt\":{\n                                \"attributes\":{\n                                    \"tnVzFilterName\":\"default\",\n                                    \"directives\":\"none\"\n                                }\n                            }\n                        }\n                    ]\n                }\n            }\n        ]\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Provided Contract to EPG",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/ap-DevNet-AP1/epg-DevNet-DB.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fvRsProv\":{\n        \"attributes\":{\n            \"tnVzBrCPName\":\"AllTraffic\"\n        }\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Consumed Contract to EPG",
+			"request": {
+				"url": "https://ssacimn010a02apic01.ss.astontech.com/api/node/mo/uni/tn-ExampleApiTenant/ap-DevNet-AP1/epg-DevNet-Web.json",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fvRsCons\":{\n        \"attributes\":{\n            \"tnVzBrCPName\":\"AllTraffic\"\n        }\n    }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
